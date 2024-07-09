@@ -1,7 +1,9 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui' as ui show Image;
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -199,10 +201,8 @@ void paintExtendedImage(
     if (repeat == ImageRepeat.noRepeat) {
       canvas.drawImageRect(image, sourceRect, destinationRect, paint);
     } else {
-      final ImageTilingInfo info =
-          createTilingInfo(repeat, rect, destinationRect, sourceRect);
       final ImageShader shader = ImageShader(
-          image, info.tmx, info.tmy, info.transform.storage,
+          image, TileMode.clamp, TileMode.clamp, Float64List(0),
           filterQuality: filterQuality);
       canvas.drawRect(rect, paint..shader = shader);
     }
